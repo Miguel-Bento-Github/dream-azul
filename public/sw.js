@@ -1,5 +1,5 @@
 // Cache name
-const CACHE_VERSION = 'dream-azul-v1'
+const CACHE_NAME = `dream-azul-v1-${new Date().toISOString()}`
 
 // Files to cache (adjust as needed)
 const URLS_TO_PRECACHE = ['/', '/index.html']
