@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500">
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500">
   <defs>
     <clipPath id="clip-path-dot-color">
       <circle cx="26" cy="170" r="8" transform="rotate(0,26,170)" />
@@ -341,8 +341,10 @@
       <circle cx="74" cy="426" r="24" transform="rotate(-90,74,426)" />
     </clipPath>
   </defs>
-  <rect x="0" y="0" height="500" width="500" clip-path="url('#clip-path-dot-color')"
-    fill="#18417E" />
+  <rect x="0" y="0" height="500" width="500" clip-path="url('#clip-path-dot-color')" fill="#18417E">
+    <animate attributeName="fill" values="#18417E; #2c61b0; #18417E" dur="10s"
+      repeatCount="indefinite" />
+  </rect>
   <rect x="18" y="18" height="112" width="112"
     clip-path="url('#clip-path-corners-square-color-0-0')" fill="#18417E" />
   <rect x="50" y="50" height="48" width="48" clip-path="url('#clip-path-corners-dot-color-0-0')"
