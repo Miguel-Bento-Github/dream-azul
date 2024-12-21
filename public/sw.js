@@ -1,16 +1,15 @@
-// Cache name
-const CACHE_NAME = `dream-azul-v1-${new Date().toISOString()}`
+const CACHE_NAME = `my-app-cache-${self.__BUILD_TIMESTAMP__ || 'default'}`
 
-// Files to cache (adjust as needed)
-const URLS_TO_PRECACHE = ['/', '/index.html']
+// Files to cache
+const URLS_TO_CACHE = ['/', '/index.html', '/styles.css', '/script.js']
 
 // Install event: Pre-cache resources
 self.addEventListener('install', (event) => {
-  console.log('[Service Worker] Installing...')
+  console.log(`[Service Worker] Installing, cache name: ${CACHE_NAME}`)
   event.waitUntil(
-    caches.open(CACHE_VERSION).then((cache) => {
+    caches.open(CACHE_NAME).then((cache) => {
       console.log('[Service Worker] Caching resources')
-      return cache.addAll(URLS_TO_PRECACHE)
+      return cache.addAll(URLS_TO_CACHE)
     }),
   )
   self.skipWaiting() // Activate the service worker immediately
@@ -18,18 +17,18 @@ self.addEventListener('install', (event) => {
 
 // Activate event: Cleanup old caches
 self.addEventListener('activate', (event) => {
-  console.log('[Service Worker] Activating...')
+  console.log(`[Service Worker] Activating, keeping cache: ${CACHE_NAME}`)
   event.waitUntil(
-    caches.keys().then((cacheNames) =>
-      Promise.all(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
         cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_VERSION) {
+          if (cacheName !== CACHE_NAME) {
             console.log(`[Service Worker] Deleting old cache: ${cacheName}`)
             return caches.delete(cacheName)
           }
         }),
-      ),
-    ),
+      )
+    }),
   )
   self.clients.claim() // Take control of uncontrolled clients
 })
@@ -37,21 +36,14 @@ self.addEventListener('activate', (event) => {
 // Fetch event: Serve cached content or fetch from network
 self.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.match(event.request).then((response) => response || fetch(event.request)),
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request)
+    }),
   )
-})
-
-// Listen for messages from the client
-self.addEventListener('message', (event) => {
-  if (event.data?.type === 'CHECK_UPDATE') {
-    console.log('[Service Worker] Check update triggered')
-    self.skipWaiting() // Skip waiting when requested
-  }
 })
 
 // Notify clients about the new version
 self.addEventListener('controllerchange', () => {
-  console.log('[Service Worker] Controller changed, notifying clients...')
   self.clients.matchAll({ type: 'window' }).then((clients) => {
     clients.forEach((client) => client.postMessage({ type: 'NEW_VERSION_AVAILABLE' }))
   })
