@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import Background from '@/components/Background.vue'
 </script>
 
 <template>
-  <div class="bg" aria-hidden="true" />
+  <Background />
   <header>
     <img alt="Dream Azul logo" class="logo" src="/logo.svg" width="125" height="125" />
 
@@ -19,19 +20,6 @@ import { RouterLink, RouterView } from 'vue-router'
 </template>
 
 <style scoped>
-.bg {
-  pointer-events: none;
-  z-index: -1;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('/bg.webp') no-repeat fixed;
-  background-size: cover;
-  filter: brightness(0.5);
-}
-
 header {
   line-height: 1.5;
   max-height: 100vh;
