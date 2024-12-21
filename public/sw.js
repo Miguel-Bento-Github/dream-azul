@@ -1,5 +1,3 @@
-// sw.js (Service Worker File)
-
 // Cache name
 const CACHE_VERSION = 'dream-azul-v1'
 

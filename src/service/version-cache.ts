@@ -6,7 +6,6 @@ export function cacheServiceWorker() {
   const onServiceWorkerMessage = (event: MessageEvent) => {
     if (event.data?.type === 'NEW_VERSION_AVAILABLE') {
       console.info('[Client] New version available. Refreshing...')
-      window.location.reload()
     }
   }
 
