@@ -10,23 +10,32 @@ export default defineConfig({
     vue(),
     vueDevTools(),
     VitePWA({
-      registerType: 'autoUpdate',
-      includeAssets: ['logo.svg'],
-      devOptions: {
-        enabled: true,
+      registerType: 'prompt',
+      injectRegister: false,
+
+      pwaAssets: {
+        disabled: false,
+        config: true,
       },
+
       manifest: {
-        name: 'Dream Azul',
-        short_name: 'DreamAzul',
-        description: "Our life's dream",
-        theme_color: '##18417E',
-        icons: [
-          {
-            src: 'logo.svg',
-            sizes: '500x500',
-            type: 'svg',
-          },
-        ],
+        name: 'dream-azul',
+        short_name: 'dreamAzul',
+        description: 'Dream Azul is a way of life',
+        theme_color: '#18417E',
+      },
+
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,svg,png,ico}'],
+        cleanupOutdatedCaches: true,
+        clientsClaim: true,
+      },
+
+      devOptions: {
+        enabled: false,
+        navigateFallback: 'index.html',
+        suppressWarnings: true,
+        type: 'module',
       },
     }),
   ],
